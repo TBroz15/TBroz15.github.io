@@ -11,7 +11,9 @@ export default function App() {
       root={(props) => (
         <MetaProvider>
           <Title>TBroz15</Title>
-          <Suspense>{props.children}</Suspense>
+          <Suspense>
+            <div class="bg-black text-white">{props.children}</div>
+          </Suspense>
         </MetaProvider>
       )}
     >
