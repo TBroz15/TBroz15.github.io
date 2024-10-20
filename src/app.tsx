@@ -10,9 +10,7 @@ export default function App() {
       base={import.meta.env.SERVER_BASE_URL}
       root={(props) => (
         <MetaProvider>
-          <Title>SolidStart - Basic</Title>
-          <a href="/">Index</a>
-          <a href="/about">About</a>
+          <Title>TBroz15</Title>
           <Suspense>{props.children}</Suspense>
         </MetaProvider>
       )}

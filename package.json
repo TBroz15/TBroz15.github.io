@@ -10,8 +10,10 @@
   "dependencies": {
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.14.10",
-    "@solidjs/start": "^1.0.9",
+    "@solidjs/start": "^1.0.8",
+    "@tailwindcss/vite": "4.0.0-alpha.20",
     "solid-js": "^1.9.2",
+    "tailwindcss": "4.0.0-alpha.25",
     "vinxi": "^0.4.3"
   },
   "engines": {
