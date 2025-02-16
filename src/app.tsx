@@ -12,7 +12,7 @@ export default function App() {
         <MetaProvider>
           <Title>TBroz15</Title>
           <Suspense>
-            <div class="bg-black text-white">{props.children}</div>
+            <>{props.children}</>
           </Suspense>
         </MetaProvider>
       )}

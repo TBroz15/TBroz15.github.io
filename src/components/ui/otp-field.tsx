@@ -17,7 +17,7 @@ const OTPField = <T extends ValidComponent = "div">(props: DynamicProps<T, OTPFi
   return (
     <OtpField
       class={cn(
-        "flex items-center gap-2 disabled:cursor-not-allowed has-[:disabled]:opacity-50",
+        "flex items-center gap-2 disabled:cursor-not-allowed has-disabled:opacity-50",
         local.class
       )}
       {...others}
