@@ -7,10 +7,26 @@
     "start": "vinxi start"
   },
   "dependencies": {
+    "@ark-ui/solid": "^4.10.1",
+    "@corvu/drawer": "^0.2.3",
+    "@corvu/otp-field": "^0.1.4",
+    "@corvu/resizable": "^0.2.4",
+    "@fontsource/jetbrains-mono": "^5.1.2",
+    "@fontsource/red-hat-display": "^5.1.1",
+    "@kobalte/core": "^0.13.8",
+    "@solid-primitives/refs": "^1.1.0",
     "@solidjs/meta": "^0.29.4",
     "@solidjs/router": "^0.15.0",
     "@solidjs/start": "^1.1.0",
+    "chart.js": "^4.4.7",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk-solid": "^1.1.2",
+    "embla-carousel-solid": "^8.5.2",
     "solid-js": "^1.9.2",
+    "solid-sonner": "^0.2.8",
+    "tailwind-merge": "^3.0.1",
+    "tailwindcss-animate": "^1.0.7",
     "vinxi": "^0.5.3"
   },
   "devDependencies": {
