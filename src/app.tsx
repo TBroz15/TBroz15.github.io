@@ -3,6 +3,8 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import "./app.css";
+import "@fontsource/jetbrains-mono";
+import { ColorModeScript, ColorModeProvider } from "@kobalte/core";
 
 export default function App() {
   return (
@@ -12,7 +14,15 @@ export default function App() {
         <MetaProvider>
           <Title>TBroz15</Title>
           <Suspense>
-            <>{props.children}</>
+            <>
+              <ColorModeScript
+                storageType={"localStorage"}
+                initialColorMode="dark"
+              />
+              <ColorModeProvider initialColorMode="dark">
+                {props.children}
+              </ColorModeProvider>
+            </>
           </Suspense>
         </MetaProvider>
       )}
