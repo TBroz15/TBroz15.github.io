@@ -1,5 +1,5 @@
 import { Flex } from "~/components/ui/flex";
-import { createSignal, onMount } from "solid-js";
+import { createEffect, createSignal, onMount, Show } from "solid-js";
 import Matter from "matter-js";
 
 export default function Home() {
@@ -8,78 +8,100 @@ export default function Home() {
   const [height, setHeight] = createSignal(0);
 
   onMount(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
 
-    const engine = Matter.Engine.create();
-    engine.world.gravity.y = 1;
+    window.addEventListener("resize", handleResize);
 
-    const renderer = Matter.Render.create({
-      element: test,
-      engine: engine,
-      options: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-        wireframes: false, // Set to true for wireframe rendering
-        background: "#f0f0f0",
-      },
-    });
+    handleResize();
 
-    Matter.Render.run(renderer);
+    setTimeout(() => {
+      const engine = Matter.Engine.create();
 
-    const runner = Matter.Runner.create({ delta: 2 });
-    Matter.Runner.run(runner, engine);
-
-    const mouse = Matter.Mouse.create(test);
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      mouse: mouse,
-      constraint: {
-        stiffness: 1,
-        render: {
-          visible: true,
+      const renderer = Matter.Render.create({
+        element: test,
+        engine: engine,
+        options: {
+          width: width(),
+          height: height(),
+          wireframes: false, // Set to true for wireframe rendering
         },
-      },
-    });
-    Matter.Composite.add(engine.world, mouseConstraint);
+      });
 
-    // Create boundary bodies
-    const boundaries = [
-      // Top boundary
-      Matter.Bodies.rectangle(width() / 2, 0, width(), 50, { isStatic: true }),
-      // Bottom boundary
-      Matter.Bodies.rectangle(width() / 2, height(), width(), 50, {
-        isStatic: true,
-      }),
-      // Left boundary
-      Matter.Bodies.rectangle(0, height() / 2, 50, height(), {
-        isStatic: true,
-      }),
-      // Right boundary
-      Matter.Bodies.rectangle(width(), height() / 2, 50, height(), {
-        isStatic: true,
-      }),
-    ];
+      Matter.Render.run(renderer);
 
-    const rectangle = Matter.Bodies.rectangle(400, 200, 80, 80);
-    const circle = Matter.Bodies.circle(200, 200, 50);
-    const ground = Matter.Bodies.rectangle(
-      window.innerWidth / 2,
-      window.innerHeight,
-      window.innerWidth,
-      1,
-      {
-        isStatic: true,
-      }
-    );
+      const runner = Matter.Runner.create();
+      Matter.Runner.run(runner, engine);
 
-    Matter.World.add(engine.world, [rectangle, circle, ground, ...boundaries]);
+      const mouse = Matter.Mouse.create(test);
+      const mouseConstraint = Matter.MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 1,
+          render: {
+            visible: true,
+          },
+        },
+      });
+      Matter.Composite.add(engine.world, mouseConstraint);
 
-    // Cleanup on unmount (optional)
-    return () => {
-      Matter.Render.stop(renderer);
-      Matter.Engine.clear(engine);
-    };
+      const boundaries = [
+        // Top boundary
+        Matter.Bodies.rectangle(width() / 2, 0, width(), 100, {
+          isStatic: true,
+        }),
+        // Bottom boundary
+        Matter.Bodies.rectangle(width() / 2, height(), width(), 100, {
+          isStatic: true,
+        }),
+        // Left boundary
+        Matter.Bodies.rectangle(0, height() / 2, 100, height(), {
+          isStatic: true,
+        }),
+        // Right boundary
+        Matter.Bodies.rectangle(width(), height() / 2, 100, height(), {
+          isStatic: true,
+        }),
+      ];
+
+      const rectangle = Matter.Bodies.rectangle(400, 200, 80, 80);
+      const circle = Matter.Bodies.circle(200, 200, 50);
+
+      Matter.World.add(engine.world, [rectangle, circle, ...boundaries]);
+
+      return () => {
+        Matter.Render.stop(renderer);
+        Matter.Engine.clear(engine);
+      };
+    }, 1000);
   });
 
-  return <div ref={test} class="w-screen h-screen"></div>;
+  return (
+    <>
+      <Show when={width() >= 640}>
+        <div ref={test} class="fixed"></div>
+      </Show>
+
+      <Flex
+        justifyContent="start"
+        alignItems="start"
+        class="fixed z-10 touch-none w-fit p-4 py-10 sm:p-20 gap-4"
+        flexDirection="col"
+      >
+        <Flex alignItems="start" flexDirection="col">
+          <code class="font-black text-5xl">TBroz15</code>
+          <pre>
+            <code>youtube creator and developer</code>
+          </pre>
+          <code>more content and thingamajigs coming soon!</code>
+        </Flex>
+
+        <code class="block sm:hidden">
+          recommended for desktop and <b>l o n g</b> screens!
+        </code>
+      </Flex>
+    </>
+  );
 }
